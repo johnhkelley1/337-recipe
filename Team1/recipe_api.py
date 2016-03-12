@@ -7,8 +7,6 @@ from modules import methods
 import requests
 from bs4 import BeautifulSoup
 
-RECIPE_HTML = ""
-
 def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
     parsed results in the correct format. See project sheet for

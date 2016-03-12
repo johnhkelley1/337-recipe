@@ -10,7 +10,7 @@ from collections import Counter
 # init is an optional flag to indicate you're starting
 # over; old autograder results are written over and column
 # headers are printed to the file.
-team = "0"
+team = "1"
 init = False
 for arg in sys.argv:
     if arg == "init":

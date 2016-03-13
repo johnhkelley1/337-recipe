@@ -36,7 +36,7 @@ def getName(astring):
 	j = 0
 	for word in words:
 		if word in NAME_STOPWORDS:
-			break;
+			break
 		j += 1
 	words2 = words[:j]
 	names.append(list2string(words2))

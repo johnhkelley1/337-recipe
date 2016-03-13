@@ -20,7 +20,7 @@ def getRecipe(url):
 	soup = BeautifulSoup(r.text, 'html.parser')
 	RECIPE_HTML = soup
 
-	#ingredients.get(RECIPE_HTML)
+	ingredients.get(RECIPE_HTML)
 	#tools.get(RECIPE_HTML)
 	#methods.get(RECIPE_HTML)
 

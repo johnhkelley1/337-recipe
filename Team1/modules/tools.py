@@ -41,10 +41,10 @@ def get(RECIPE_HTML):
 	#print final_directions_words
 	for i in final_directions_words:
 		if i == "baste":
-			del final_directions_words[i]
+			del i
 			final_directions_words.append("baster")
 		if i == "stir":
-			del final_directions_words[i]
+			del i
 			final_directions_words.append("spoon")
 
 
@@ -73,6 +73,6 @@ def get(RECIPE_HTML):
 	#check matches between final_directions_words and unigrams_tools
 	tools_final += set(final_directions_words).intersection(unigram_tools)
 
-	print tools_final
+	return tools_final
 
 

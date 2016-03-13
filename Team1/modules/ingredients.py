@@ -20,9 +20,11 @@ def get(recipe):
 		ingredient["quantity"] = getQuantity(ing)
 		ingredient["measurement"] = getMeasurement(ing)
 		ingredient["preparation"] = getPreparation(ing)
+		ingredient["descriptor"] = "none"
+		ingredient["prep-description"] = "none"
 		ingredients.append(ingredient)
 	
-	print ingredients
+	return ingredients
 
 def getName(astring):
 	names = []
@@ -39,18 +41,18 @@ def getName(astring):
 			break
 		j += 1
 	words2 = words[:j]
-	names.append(list2string(words2))
+	while words2[0][-2:] == "ed" and len(words2) > 1:
+		words2.pop(0)
 
-	names.append(list2string(words))
-
-
-	return set(names)
+	if(len(words2) > 2):
+		words2 = words2[-2:]
+	return list2string(words2)
 
 def getQuantity(astring):
 	words = word_tokenize(astring)
 	if isNum(words[0]):
 		return words[0]
-	return []
+	return ""
 
 def getMeasurement(astring):
 	words = word_tokenize(astring)
@@ -58,8 +60,8 @@ def getMeasurement(astring):
 	for word in words:
 		for measurement in MEASUREMENTS:
 			if measurement.lower() in word.lower():
-				meas.append(word)
-	return meas
+				return word
+	return "units"
 
 def getPreparation(astring):
 	words = word_tokenize(astring)
@@ -67,8 +69,8 @@ def getPreparation(astring):
 	for word in words:
 		end = word[-2:]
 		if end == "ed":
-			preps.append(word)
-	return preps
+			return word
+	return "none"
 
 
 

@@ -3,3 +3,5 @@ __init__.pyc
 ingredients.pyc
 methods.pyc
 tools.pyc
+parsegrades.csv
+recipe_api.pyc

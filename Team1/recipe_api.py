@@ -12,6 +12,12 @@ def autograder(url):
     parsed results in the correct format. See project sheet for
     details on correct format.'''
     # your code here
+    page = getRecipe(url)
+    results = {}
+    results["ingredients"] = ingredients.get(page)
+    results["cooking tools"] = tools.get(page)
+    results["primary cooking method"] = "none"
+    results["cooking methods"] = []
 
     return results
 
@@ -19,8 +25,9 @@ def getRecipe(url):
 	r = requests.get(url)
 	soup = BeautifulSoup(r.text, 'html.parser')
 	RECIPE_HTML = soup
+	return RECIPE_HTML
 
-	ingredients.get(RECIPE_HTML)
+	#print ingredients.get(RECIPE_HTML)
 	#tools.get(RECIPE_HTML)
 	#methods.get(RECIPE_HTML)
 

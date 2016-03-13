@@ -18,7 +18,7 @@ for arg in sys.argv:
     else:
         team = arg
 
-api = importlib.import_module("Team%s.recipe_api" % team)
+api = importlib.import_module("Team1.recipe_api")
 
 
 def check_tools(answer, stud):

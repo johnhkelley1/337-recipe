@@ -3,6 +3,7 @@
 from modules import ingredients
 from modules import tools
 from modules import methods
+from modules import steps
 
 from transforms import vegan
 
@@ -29,6 +30,7 @@ def getRecipe(url):
     results["cooking tools"] = tools.get(page)
     results["primary cooking method"] = "none"
     results["cooking methods"] = []
+    results["steps"] = steps.get(page,results)
 
     return results
 
@@ -36,10 +38,24 @@ def getRecipe(url):
 	#tools.get(RECIPE_HTML)
 	#methods.get(RECIPE_HTML)
 
-def tranformVegan():
+def tesTranformVegan():
     recipe = getRecipe("http://allrecipes.com/Recipe/Meatball-Nirvana/")
     vrecipe = vegan.toVegan(recipe)
     vrecipe = vegan.toMeat(vrecipe)
     pprint.pprint(vrecipe)
 
-tranformVegan()
+def testSteps():
+    r = requests.get("http://allrecipes.com/Recipe/Meatball-Nirvana/")
+    soup = BeautifulSoup(r.text, 'html.parser')
+    RECIPE_HTML = soup
+    page = RECIPE_HTML
+
+    results = {}
+    results["ingredients"] = ingredients.get(page)
+    results["cooking tools"] = tools.get(page)
+    results["primary cooking method"] = "bake"
+    results["cooking methods"] = ["bake","cook","broil"]
+    steps.get(page,results)
+
+
+

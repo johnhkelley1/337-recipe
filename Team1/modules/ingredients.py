@@ -57,8 +57,6 @@ def getQuantity(astring):
 		if("/" in words[1]):
 			numer,den = words[1].split( '/' )
 			num = float(wh) + float(numer)/float(den)
-		if num.is_integer():
-			return int(num)
 		return round(num,3)
 
 	elif isNum(words[0]):
@@ -67,8 +65,6 @@ def getQuantity(astring):
 			numer,den = num.split( '/' )
 			num = float(numer)/float(den)
 		num = float(num)
-		if num.is_integer():
-			return int(num)
 		return round(num,3)
 
 	return "none"

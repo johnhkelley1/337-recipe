@@ -25,6 +25,18 @@ def toVegitarian(recipe):
 	return recipe
 
 
+def toMeat(recipe):
+	ings = []
+	for ing in recipe['ingredients']:
+		new_ings = [ing]
+		for meat in MEAT_SUBS:
+			if meat in ing['name']:
+				new_ings = substMeat(ing,meat)
+				break
+		for new_ing in new_ings:
+			ings.append(new_ing)
+	recipe['ingredients'] = ings
+	return recipe
 
 def subst(ingredient,name):
 	ings = []
@@ -49,6 +61,24 @@ def subst(ingredient,name):
 		return [makeIng("ground almonds",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],"ground",ingredient['prep-description'])]
 	return [makeIng("tofu",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
 
+def substMeat(ingredient,name):
+	ings = []
+	if ingredient["quantity"] == "none":
+		ingredient["quantity"] = 1
+	if name == "cooked beans":
+		#ing = makeIng("canned beans",ingredient["quantity"],ingredient["measurement"],ingredient["descriptor"],ingredient["preparation"],ingredient["prep-description"])
+		ing = makeIng("beef",ingredient["quantity"]*2,ingredient["measurement"],"none","ground","none")
+		ings.append(ing)
+		return ings
+	elif name == 'almond milk':
+		return [makeIng("milk",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == "margarine":
+		return [makeIng("butter",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == "ground almonds":
+		return [makeIng("cheese",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],"ground",ingredient['prep-description'])]
+	return [makeIng("chicken",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+
+
 def makeIng(name,quantity,measurement,descriptor,preparation,prepDescription):
 	return {
 		"name":name,
@@ -61,3 +91,4 @@ def makeIng(name,quantity,measurement,descriptor,preparation,prepDescription):
 
 VEGI_SUBS = ['chicken','beef','bacon','pork','ham','crab','duck','goose','lamb','meat','poultry','veal','boar','steak','venison','turkey','quail','pheasant','rabbit','fish','cod','salmon','oyster']
 VEGAN_SUBS = ['milk','butter','egg','cheese']
+MEAT_SUBS = ['almond milk','margarine','ground almonds','cooked beans']

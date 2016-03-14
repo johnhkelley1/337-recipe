@@ -39,6 +39,7 @@ def getRecipe(url):
 def tranformVegan():
     recipe = getRecipe("http://allrecipes.com/Recipe/Meatball-Nirvana/")
     vrecipe = vegan.toVegan(recipe)
+    vrecipe = vegan.toMeat(vrecipe)
     pprint.pprint(vrecipe)
 
 tranformVegan()

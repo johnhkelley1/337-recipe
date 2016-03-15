@@ -28,8 +28,10 @@ def getRecipe(url):
     results = {}
     results["ingredients"] = ingredients.get(page)
     results["cooking tools"] = tools.get(page)
+
     results["primary cooking method"] = methods.getPrimary(page)
     results["cooking methods"] = methods.get(page)
+
     results["steps"] = steps.get(page,results)
 
     return results
@@ -56,3 +58,4 @@ def testSteps():
     results["primary cooking method"] = "bake"
     results["cooking methods"] = ["bake","cook","broil"]
     steps.get(page,results)
+

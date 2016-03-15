@@ -6,6 +6,7 @@ from modules import methods
 from modules import steps
 
 from transforms import vegan
+from transforms import cuisine
 
 import requests
 from bs4 import BeautifulSoup
@@ -59,3 +60,21 @@ def testSteps():
     results["cooking methods"] = ["bake","cook","broil"]
     steps.get(page,results)
 
+def diff(a, b):
+        b = set(b)
+        return [aa for aa in a if aa not in b]
+
+def testCuisine():
+    recipe = getRecipe("http://allrecipes.com/Recipe/Meatball-Nirvana/")
+    arecipe = cuisine.toCuisine(recipe, 'american')
+    crecipe = cuisine.toCuisine(recipe, 'chinese')
+
+    ings1 = [ing['name'] for ing in recipe['ingredients']]
+    ings2 = [ing['name'] for ing in arecipe['ingredients']]
+    ings3 = [ing['name'] for ing in crecipe['ingredients']]
+
+    pprint.pprint(diff(ings1, ings2))
+    pprint.pprint(diff(ings2, ings1))
+    pprint.pprint(diff(ings3, ings1))
+
+testCuisine()

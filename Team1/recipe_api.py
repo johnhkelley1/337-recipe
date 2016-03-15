@@ -84,13 +84,19 @@ while True:
         printRecipe(recipe)
     elif choice == 1:
         print "\n Choose your transformation:"
-        print "  (0) American Cuisine"
-        print "  (1) Chinese Cuisine"
+        print "  (0) To American Cuisine"
+        print "  (1) To Chinese Cuisine"
+        print "  (2) To Vegan"
+        print "  (3) To Vegitarian"
+        print "  (4) To Paleo"
+        print "  (5) To Lowfat"
+        print "  (6) From Paleo"
+        print "  (7) From Lowfat"
         print "\n  Your choice:",
         choice = int(raw_input())
 
         # Make sure choice is valid
-        if choice < 0 or choice > 1:
+        if choice < 0 or choice > 7:
             print "Invalide choice!"
             continue
 
@@ -99,6 +105,18 @@ while True:
             new_recipe = cuisine.toCuisine(recipe, 'american')
         elif choice == 1:
             new_recipe = cuisine.toCuisine(recipe, 'chinese')
+        elif choice == 2:
+            new_recipe = vegan.toVegan(recipe)
+        elif choice == 3:
+            new_recipe = vegan.toVegitarian(recipe)
+        elif choice == 4:
+            new_recipe = paleo.toPaleo(recipe)
+        elif choice == 5:
+            new_recipe = paleo.toLowFat(recipe)
+        elif choice == 6:
+            new_recipe = paleo.fromPaleo(recipe)
+        elif choice == 7:
+            new_recipe = paleo.fromLowFat(recipe)
 
         pprint.pprint(new_recipe)
         ings     = [ing['name'] for ing in recipe['ingredients']]

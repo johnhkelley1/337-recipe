@@ -33,6 +33,42 @@ lowfat["canola oil"] = "olive oil"
 lowfat["guacamole"] = "salsa"
 
 
+def subst_paleoify(ingredient,name):
+	ings = []
+	if ingredient["quantity"] == "none":
+		ingredient["quantity"] = 1
+	if name == "flour":
+		return [makeIng("coconut flour",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'milk':
+		return [makeIng("almond milk",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'cream':
+		return [makeIng("coconut cream",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'soy sauce':
+		return [makeIng("coconut aminos",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'sugar':
+		return [makeIng("honey",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'rice':
+		return [makeIng("cauliflower rice",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'spaghetti':
+		return [makeIng("squash spaghetti",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'pasta':
+		return [makeIng("zucchini",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'vegetable oil':
+		return [makeIng("coconut oil",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'canola oil':
+		return [makeIng("olive oil",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'bread':
+		return [makeIng("paleo bread",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == "butter":
+		return [makeIng("ghee",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == "peanut butter":
+		return [makeIng("almond butter",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],"ground",ingredient['prep-description'])]
+	elif name == 'cheese':
+		return [makeIng("nut cheese",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+	elif name == 'bread crumbs':
+		return [makeIng("flax meal",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
+
+
 def createHighFatMapping(theDict):
 	highFat = Dictlist()
 	for key, value in theDict.iteritems():
@@ -57,7 +93,7 @@ def toLowFat(recipe):
 		for _ing in new_ings:
 			ings.append(_ing)
 	recipe['ingredients'] = ings
-	return recipe	
+	return recipe
 
 def fromLowFat(recipe):
 	recipe = deepcopy(recipe)
@@ -73,7 +109,7 @@ def fromLowFat(recipe):
 			ings.append(_ing)
 	recipe['ingredients'] = ings
 	return recipe
-	
+
 
 NONPAL_SUBS = ['coconut flour', 'almond milk', 'coconut cream', 'coconut aminos', 'honey', 'cauliflower rice', 'squash spaghetti', 'zucchini', 'coconut oil', 'olive oil', 'paleo bread', 'almond butter', 'nut cheese', 'flax meal']
 PAL_SUBS = ['flour', 'milk', 'cream', 'soy sauce', 'sugar', 'rice', 'spaghetti', 'pasta', 'vegetable oil', 'canola oil', 'bread', 'peanut butter', 'cheese', 'butter']
@@ -117,41 +153,6 @@ def makeIng(name,quantity,measurement,descriptor,preparation,prepDescription):
 		"prep-description":prepDescription
 	}
 
-def subst_paleoify(ingredient,name):
-	ings = []
-	if ingredient["quantity"] == "none":
-		ingredient["quantity"] = 1
-	if name == "flour":
-		return [makeIng("coconut flour",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'milk':
-		return [makeIng("almond milk",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'cream':
-		return [makeIng("coconut cream",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'soy sauce':
-		return [makeIng("coconut aminos",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'sugar':
-		return [makeIng("honey",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'rice':
-		return [makeIng("cauliflower rice",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'spaghetti':
-		return [makeIng("squash spaghetti",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'pasta':
-		return [makeIng("zucchini",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'vegetable oil':
-		return [makeIng("coconut oil",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'canola oil':
-		return [makeIng("olive oil",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'bread':
-		return [makeIng("paleo bread",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == "butter":
-		return [makeIng("ghee",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == "peanut butter":
-		return [makeIng("almond butter",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],"ground",ingredient['prep-description'])]
-	elif name == 'cheese':
-		return [makeIng("nut cheese",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-	elif name == 'bread crumbs':
-		return [makeIng("flax meal",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-
 
 def subst(ingredient,name):
 	ings = []
@@ -189,8 +190,3 @@ def subst(ingredient,name):
 		return [makeIng("almond milk",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
 	elif name == 'bread crumbs':
 		return [makeIng("flax meal",ingredient['quantity'],ingredient['measurement'],ingredient['descriptor'],ingredient['preparation'],ingredient['prep-description'])]
-
-
-
-
-

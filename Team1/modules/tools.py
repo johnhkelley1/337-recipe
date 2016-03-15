@@ -43,9 +43,13 @@ def get(RECIPE_HTML):
 		if i == "baste":
 			del i
 			final_directions_words.append("baster")
-		if i == "stir":
+		elif i == "stir":
 			del i
 			final_directions_words.append("spoon")
+		elif i == "strain":
+			del i 
+			final_directions_words.append("strainer")
+
 
 
 	bigrams_in_directions = list(nltk.bigrams(final_directions_words))
@@ -63,8 +67,15 @@ def get(RECIPE_HTML):
 
 	#print trigrams_final
 
-
+	tempTrigramTools = set(trigrams_final).intersection(trigram_tools)
 	#check matches b/w trigrams_final and trigram_tools
+	
+	tempBigramTools = set(bigrams_final).intersection(bigram_tools)
+	#check matches b/w bigrams_final and bigram_tools
+	
+	tempUniramTools = set(final_directions_words).intersection(unigram_tools)
+	#check matches between final_directions_words and unigrams_tools
+
 	tools_final += set(trigrams_final).intersection(trigram_tools)
 
 	#check matches b/w bigrams_final and bigram_tools
@@ -72,6 +83,24 @@ def get(RECIPE_HTML):
 
 	#check matches between final_directions_words and unigrams_tools
 	tools_final += set(final_directions_words).intersection(unigram_tools)
+
+
+
+	
+	#tools_final = tempUniramTools + tempBigramTools + tempTrigramTools
+	temp_tools_final = tools_final
+
+	# partialCheck = ''
+	# for i in temp_tools_final:
+	# 	words_in_tool = nltk.tokenize.word_tokenize(i)
+	# 	if len(words_in_tool) == 1:
+	# 		 partialCheck = words_in_tool[0]
+	# 		 del i 
+	# 		 for j in temp_tools_final:
+	# 		 	words2_in_tool = nltk.tokenize.word_tokenize(j)
+	# 		 	if partialCheck in words2_in_tool:
+	# 		 		del tools_final[tools_final.index(partialCheck)]
+
 
 	return tools_final
 

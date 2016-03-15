@@ -12,7 +12,8 @@ VEGIS  = ['lemon', 'mushroom', 'beet', 'bell pepper', 'lettuce', 'cabbage',
           'cauliflower', 'celery', 'chives', 'onion', 'leek', 'carrot',
           'ginger']
 
-SPICES = ['oregano', 'salt', 'pepper', 'thyme', 'garlic powder']
+SPICES = ['oregano', 'salt', 'pepper', 'thyme', 'garlic powder', 'cumin',
+          'spice']
 
 ING_SUBS = {
     'american': {
@@ -22,10 +23,11 @@ ING_SUBS = {
         'spices': ['salt', 'pepper']
     },
     'chinese': {
-        'sauces': ['soy sauce', 'sweet and sour sauce', 'kung pao sauce', 'general tso sauce'],
+        'sauces': ['soy sauce', 'sweet and sour sauce', 'kung pao sauce',
+                   'general tso sauce'],
         'oils': ['soybean oil'],
         'vegis': ['bok choy', 'chinese eggplant', 'bitter melon'],
-        'spices': ['msg', 'red pepper flakes']
+        'spices': ['msg', 'red pepper flakes', 'sichuan pepper']
     }
 }
 
@@ -61,6 +63,11 @@ def toCuisine(recipe, cuisine):
     spice_p = None
     spice_pd = None
 
+    new_sauce = choice(ING_SUBS[cuisine]['sauces'])
+    new_oil = choice(ING_SUBS[cuisine]['oils'])
+    new_vegi = choice(ING_SUBS[cuisine]['vegis'])
+    new_spice = choice(ING_SUBS[cuisine]['spices'])
+
     for ing in recipe['ingredients']:
         # Check sauce
         for s in SAUCES:
@@ -74,6 +81,12 @@ def toCuisine(recipe, cuisine):
 
                 temp_ings = recipe['ingredients'][:]
                 recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
+                for step in recipe['steps']:
+                    temp_ings = step['ingredients'][:]
+                    if temp_ings == 'none':
+                        continue
+                    step['ingredients'] = [d for d in temp_ings if d != ing['name']]
+                    step['ingredients'].append(new_sauce)
                 continue
 
         # Check oil
@@ -88,6 +101,12 @@ def toCuisine(recipe, cuisine):
 
                 temp_ings = recipe['ingredients'][:]
                 recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
+                for step in recipe['steps']:
+                    temp_ings = step['ingredients'][:]
+                    if temp_ings == 'none':
+                        continue
+                    step['ingredients'] = [d for d in temp_ings if d != ing['name']]
+                    step['ingredients'].append(new_oil)
                 continue
 
         # Check vegi
@@ -102,6 +121,12 @@ def toCuisine(recipe, cuisine):
 
                 temp_ings = recipe['ingredients'][:]
                 recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
+                for step in recipe['steps']:
+                    temp_ings = step['ingredients'][:]
+                    if temp_ings == 'none':
+                        continue
+                    step['ingredients'] = [d for d in temp_ings if d != ing['name']]
+                    step['ingredients'].append(new_vegi)
                 continue
 
         # Check spice
@@ -116,11 +141,17 @@ def toCuisine(recipe, cuisine):
 
                 temp_ings = recipe['ingredients'][:]
                 recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
+                for step in recipe['steps']:
+                    temp_ings = step['ingredients'][:]
+                    if temp_ings == 'none':
+                        continue
+                    step['ingredients'] = [d for d in temp_ings if d != ing['name']]
+                    step['ingredients'].append(new_spice)
                 continue
 
     if sauce:
         recipe['ingredients'].append({
-    		"name": choice(ING_SUBS[cuisine]['sauces']),
+    		"name": new_sauce,
     		"quantity": sauce_q,
     		"measurement": sauce_m,
     		"descriptor": sauce_d,
@@ -130,7 +161,7 @@ def toCuisine(recipe, cuisine):
 
     if oil:
         recipe['ingredients'].append({
-    		"name": choice(ING_SUBS[cuisine]['oils']),
+    		"name": new_oil,
     		"quantity": oil_q,
     		"measurement": oil_m,
     		"descriptor": oil_d,
@@ -140,7 +171,7 @@ def toCuisine(recipe, cuisine):
 
     if vegi:
         recipe['ingredients'].append({
-    		"name": choice(ING_SUBS[cuisine]['vegis']),
+    		"name": new_vegi,
     		"quantity": vegi_q,
     		"measurement": vegi_m,
     		"descriptor": vegi_d,
@@ -150,7 +181,7 @@ def toCuisine(recipe, cuisine):
 
     if spice:
         recipe['ingredients'].append({
-    		"name": choice(ING_SUBS[cuisine]['spices']),
+    		"name": new_spice,
     		"quantity": spice_q,
     		"measurement": spice_m,
     		"descriptor": spice_d,

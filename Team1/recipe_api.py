@@ -5,6 +5,7 @@ from modules import tools
 from modules import methods
 from modules import steps
 
+from transforms import paleo
 from transforms import vegan
 from transforms import cuisine
 
@@ -31,6 +32,7 @@ def getRecipe(url):
     results["cooking tools"] = tools.get(page)
 
     results["primary cooking method"] = methods.getPrimary(page)
+
     results["cooking methods"] = methods.get(page)
 
     results["steps"] = steps.get(page,results)
@@ -112,7 +114,5 @@ while True:
     elif choice == 2:
         url = None
         continue
-
-
 
 print "\nGoodbye!"

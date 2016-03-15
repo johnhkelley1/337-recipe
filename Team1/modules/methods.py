@@ -41,7 +41,7 @@ def getPrimary(RECIPE_HTML):
 	secondary_methods = ['saute', 'poach', 'simmer', 'barbeque', 'steam', 'blanch']
 
 	all_methods = get(RECIPE_HTML)
-	
+
 
 	for word in all_methods:
 		if word in primary_methods:

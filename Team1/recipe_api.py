@@ -5,6 +5,7 @@ from modules import tools
 from modules import methods
 from modules import steps
 
+from transforms import paleo
 from transforms import vegan
 
 import requests
@@ -30,6 +31,7 @@ def getRecipe(url):
     results["cooking tools"] = tools.get(page)
 
     results["primary cooking method"] = methods.getPrimary(page)
+
     results["cooking methods"] = methods.get(page)
 
     results["steps"] = steps.get(page,results)
@@ -46,6 +48,21 @@ def tesTranformVegan():
     vrecipe = vegan.toMeat(vrecipe)
     pprint.pprint(vrecipe)
 
+def testTransformPaleo():
+    recipe = getRecipe("http://allrecipes.com/Recipe/Meatball-Nirvana/")
+    paleoRecipe = paleo.toPaleo(recipe)
+    paleo2Recipe = paleo.fromPaleo(recipe)
+    lowFatRecipe = paleo.toLowFat(recipe)
+    highFatRecipe = paleo.fromLowFat(recipe)
+    pprint.pprint(lowFatRecipe)
+    print "\n\n\n\n========="
+    pprint.pprint(highFatRecipe)
+    print "\n\n\n\n========="
+    pprint.pprint(paleoRecipe)
+    print "\n\n\n\n========="
+    pprint.pprint(paleo2Recipe)
+
+
 def testSteps():
     r = requests.get("http://allrecipes.com/Recipe/Meatball-Nirvana/")
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -58,4 +75,6 @@ def testSteps():
     results["primary cooking method"] = "bake"
     results["cooking methods"] = ["bake","cook","broil"]
     steps.get(page,results)
+
+testTransformPaleo()
 

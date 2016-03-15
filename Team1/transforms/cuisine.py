@@ -2,9 +2,9 @@ import re
 from copy import deepcopy
 from random import choice
 
-SAUCES = ['sauce', 'gravy', 'mayonnaise']
+SAUCES = ['sauce', 'gravy', 'mayonnaise', 'ketchup']
 
-OILS   = ['margerine', 'oil', 'olive oil', 'vegitable oil', 'butter']
+OILS   = ['margerine', 'oil', 'butter']
 
 VEGIS  = ['lemon', 'mushroom', 'beet', 'bell pepper', 'lettuce', 'cabbage',
           'corn', 'peas', 'kale', 'spinach', 'avocado', 'tomato', 'melon',
@@ -12,16 +12,20 @@ VEGIS  = ['lemon', 'mushroom', 'beet', 'bell pepper', 'lettuce', 'cabbage',
           'cauliflower', 'celery', 'chives', 'onion', 'leek', 'carrot',
           'ginger']
 
+SPICES = ['oregano', 'salt', 'pepper', 'thyme', 'garlic powder']
+
 ING_SUBS = {
     'american': {
         'sauces': ['ketchup', 'mayonnaise'],
         'oils': ['butter', 'margerine'],
-        'vegis': ['french fries', 'tater tots', 'caesar salad']
+        'vegis': ['french fries', 'tater tots', 'caesar salad'],
+        'spices': ['salt', 'pepper']
     },
     'chinese': {
-        'sauces': ['soy sauce', 'sweet and sour sauce', 'kung pao sauce'],
+        'sauces': ['soy sauce', 'sweet and sour sauce', 'kung pao sauce', 'general tso sauce'],
         'oils': ['soybean oil'],
-        'vegis': ['bok choy', 'chinese eggplant', 'bitter melon']
+        'vegis': ['bok choy', 'chinese eggplant', 'bitter melon'],
+        'spices': ['msg', 'red pepper flakes']
     }
 }
 
@@ -49,6 +53,13 @@ def toCuisine(recipe, cuisine):
     vegi_d = None
     vegi_p = None
     vegi_pd = None
+
+    spice = False
+    spice_q = None
+    spice_m = None
+    spice_d = None
+    spice_p = None
+    spice_pd = None
 
     for ing in recipe['ingredients']:
         # Check sauce
@@ -93,6 +104,20 @@ def toCuisine(recipe, cuisine):
                 recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
                 continue
 
+        # Check spice
+        for s in SPICES:
+            if re.search(s, ing['name'], re.IGNORECASE):
+                spice = True
+                spice_q = ing['quantity']
+                spice_m = ing['measurement']
+                spice_d = ing['descriptor']
+                spice_p = ing['preparation']
+                spice_pd = ing['prep-description']
+
+                temp_ings = recipe['ingredients'][:]
+                recipe['ingredients'] = [d for d in temp_ings if d['name'] != ing['name']]
+                continue
+
     if sauce:
         recipe['ingredients'].append({
     		"name": choice(ING_SUBS[cuisine]['sauces']),
@@ -121,6 +146,16 @@ def toCuisine(recipe, cuisine):
     		"descriptor": vegi_d,
     		"preparation": vegi_p,
     		"prep-description": vegi_pd
+    	})
+
+    if spice:
+        recipe['ingredients'].append({
+    		"name": choice(ING_SUBS[cuisine]['spices']),
+    		"quantity": spice_q,
+    		"measurement": spice_m,
+    		"descriptor": spice_d,
+    		"preparation": spice_p,
+    		"prep-description": spice_pd
     	})
 
     return recipe

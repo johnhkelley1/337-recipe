@@ -19,7 +19,7 @@ lowfat["ice cream"] = "sorbet"
 lowfat["yogurt"] = "low fat yogurt"
 lowfat["cream cheese"] = "low fat cream cheese"
 lowfat["sour cream"] = "plain low-fat yogurt"
-lowfat["coffee creamer"] = "low-fat milk"
+lowfat["coffee creamer"] = "low-fat milk 1"
 lowfat["coffee cream"] = "low-fat milk"
 lowfat["alfredo sauce"] = "marinara sauce"
 lowfat["granola"] = "reduced-fat granola"
@@ -27,13 +27,14 @@ lowfat["croissant"] = "french roll"
 lowfat["butter"] = "diet margarine"
 lowfat["mayonnaise"] = "light mayonnaise"
 lowfat["avocado"] = "cucumber"
-lowfat["vegetable oil"] = "olive oil"
-lowfat["coconut oil"] = "olive oil"
-lowfat["canola oil"] = "olive oil"
+lowfat["vegetable oil"] = "olive oil 1"
+lowfat["coconut oil"] = "olive oil 2"
+lowfat["canola oil"] = "olive oil 3"
 lowfat["guacamole"] = "salsa"
 
 
 def createHighFatMapping(theDict):
+	theDict = deepcopy(theDict)
 	highFat = Dictlist()
 	for key, value in theDict.iteritems():
 		if type(value) is not list:

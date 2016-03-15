@@ -1,4 +1,6 @@
+from copy import deepcopy
 def toVegan(recipe):
+	recipe = deepcopy(recipe)
 	ings = []
 	for ing in recipe['ingredients']:
 		new_ings = [ing]
@@ -12,6 +14,7 @@ def toVegan(recipe):
 	return recipe
 
 def toVegitarian(recipe):
+	recipe = deepcopy(recipe)
 	ings = []
 	for ing in recipe['ingredients']:
 		new_ings = [ing]
@@ -26,6 +29,7 @@ def toVegitarian(recipe):
 
 
 def toMeat(recipe):
+	recipe = deepcopy(recipe)
 	ings = []
 	for ing in recipe['ingredients']:
 		new_ings = [ing]
